@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class FileReader {
     // Instance Variables
     private File inputFile;
-    private String readFile;
     private List<String> outputList = new ArrayList<String>();
 
     // Constructor
@@ -32,4 +31,5 @@ public class FileReader {
         return outputList;
 
     }
+
 }

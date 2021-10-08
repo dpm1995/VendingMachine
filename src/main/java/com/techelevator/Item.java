@@ -12,11 +12,13 @@ public class Item {
     private String slot;
     private String noise;
     private String itemCount;
+
     //Constructor
     public Item(String slot) {
         this.itemCount = "5"; // max value
         this.slot = slot; // A1..A2..A3.. etc
     }
+
     // Utilizes method in fileReader class to parse through the csv file using the regular expression | as a delimiter to return name
     public String getName() {
         FileReader file = new FileReader();
@@ -31,6 +33,7 @@ public class Item {
         }
         return name;
     }
+
     // Utilizes method in fileReader class to parse through the csv file using the regular expression | as a delimiter to return price
     public Double getPrice() {
         FileReader file = new FileReader();
@@ -45,14 +48,17 @@ public class Item {
         }
         return price;
     }
+
     // returns noise of item provided in each individual item's class
     public String makeNoise() {
         return noise;
     }
+
     // Getter for max value of 5
     public String getItemCount() {
         return itemCount;
     }
+
     // method for purchasing item and provided a message if sold out
     public void purchaseItem() {
         Integer currentCount = Integer.parseInt(itemCount) - 1;
@@ -63,4 +69,3 @@ public class Item {
         }
     }
 }
-
