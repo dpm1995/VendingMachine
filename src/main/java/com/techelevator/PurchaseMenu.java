@@ -33,10 +33,12 @@ public class PurchaseMenu {
                     AuditLog newSale = new AuditLog();
                     Transaction sale = new Transaction(currentWallet);
                     sale.setWallet(currentWallet);
+                    sale.Purchase(currentWallet);
                     System.out.println("Is there anything else we can do for you today? ");
                     break;
                 case "3": //Call the finish transaction class.
-                    this.currentWallet = 0.0;
+                    Change finishTransaction = new Change(this.currentWallet);
+                    currentWallet = 0.0;
                     break;
                 default:
                     System.out.println("Not a valid choice, try again.");

@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 public class VendingMachineCLI {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		MainMenu menu = new MainMenu();
+		MainMenu menu = new MainMenu(); //Call main menu class, where most of the program is
 		// Make some objects here!
 	}
 }

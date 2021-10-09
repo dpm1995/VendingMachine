@@ -16,8 +16,9 @@ public class FileReader {
     public File setInputFile() {
         inputFile = new File("C:\\Users\\Student\\workspace\\java-capstone-module-1-team-11\\vendingmachine.csv");
         return inputFile;
-
     }
+
+
     // Parses though entire csv file line by line while there is still a line to read
     public List<String> createVendingMachineList(File inputFile) {
 

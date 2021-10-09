@@ -30,17 +30,17 @@ public class PossibleAuditLog {
     }
     // the format for this was found via google so I hope it works. Anytime we call this we will need to pass these strings
     public String logEvent(String event, String balanceBeforeTransaction, String afterTransaction) {
-        String logString = String.format("%-24s %-22s %-14s %-14s", getCurrentTime(), event, balanceBeforeTransaction,
-                afterTransaction);
-        //                                                  the append true allows us to write to same file w/o deleting deleting content
+        String logString = String.format("%-24s %-22s %-14s %-14s", getCurrentTime(),
+                event, balanceBeforeTransaction, afterTransaction);
+        // the append true allows us to write to same file w/o deleting deleting content
         try (Writer fileWriter = new FileWriter(logFile, true);
              BufferedWriter buffered = new BufferedWriter(fileWriter)) {
             buffered.write(logString + "\n"); // new line
         } catch (IOException e1) {
         }
         return logString;
-
-
     }
-
+    public boolean validSale(double wallet, double salePrice, int stock){ //Verifies sale.
+        return wallet > salePrice && stock > 0;
+    }
 }
