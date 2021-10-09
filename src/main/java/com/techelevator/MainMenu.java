@@ -1,20 +1,13 @@
 package com.techelevator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
 public class MainMenu {
     private Scanner userInput = new Scanner(System.in);
-    private final File inventory = new File("C:\\Users\\Student\\workspace\\java-capstone-module-1-team-11\\vendingmachine.csv");
 
-    public MainMenu() throws FileNotFoundException {
-        if (!inventory.exists()) { //Since inventory is a file that's reused, here's the exception throw since I can't
-            throw new FileNotFoundException("Our inventory is currently having issues, sorry!"); //outside the class.
-        }
-
-        Scanner inventoryInput = new Scanner(inventory);
+    public MainMenu() {
+        FileReader initialInventory = new FileReader();
         System.out.println("Welcome to the Vendo-Matic 800, pick from one of the following options. ");
         System.out.println("1) Display Vendo-Matic Items");
         System.out.println("2) Buy from Vendo-Matic");
@@ -25,9 +18,9 @@ public class MainMenu {
         do {
             switch (mainChoice) {
                 case "1":
-                    while (inventoryInput.hasNext()) {
-                        System.out.println(inventoryInput);
-                    }
+                    FileReader choice1 = new FileReader();
+                    File currentInventory = choice1.setInputFile();
+                    choice1.createVendingMachineList(currentInventory);
                     break;
                 case "2":
                     PurchaseMenu sale = new PurchaseMenu(); //Need a new variable (type maybe?)
