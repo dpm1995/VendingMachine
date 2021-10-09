@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class PossibleAuditLog {
     // Instance Variables
-    private String fileName = "log.txt";
+    private String fileName = "logTest.txt";
     private File logFile = new File(fileName);
     public PossibleAuditLog() {
         createNewFile();
