@@ -1,4 +1,4 @@
 package com.techelevator;
 
-public class SalesReport {
+public class ItemTest {
 }
