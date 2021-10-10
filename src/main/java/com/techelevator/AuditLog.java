@@ -13,7 +13,7 @@ public class AuditLog {
     public AuditLog() {
         createNewFile();
     }
-
+    // creates the new file log.txt
     private void createNewFile() {
         try {
             logFile.createNewFile();
@@ -25,7 +25,7 @@ public class AuditLog {
         String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").format(new Date());
         return date;
     }
-    // the format for this was found via google so I hope it works. Anytime we call this we will need to pass these strings
+    // Anytime we call this we will need to pass these strings or other arguments
     public String logEvent(String event, String balanceBeforeTransaction, String afterTransaction) {
         String logString = String.format("%-24s %-22s %-14s %-14s", getCurrentTime(),
                 event, balanceBeforeTransaction, afterTransaction);
