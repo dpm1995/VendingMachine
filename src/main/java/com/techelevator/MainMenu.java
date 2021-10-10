@@ -28,7 +28,7 @@ public class MainMenu {
         do {
             switch (mainChoice) {
                 case "1":
-                    System.out.println(choice1.getInventoryList());
+                    System.out.println(choice1.currentInventory());
                     break;
                 case "2":
                     sale.subMenu(mainChoice);

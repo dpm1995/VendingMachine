@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;

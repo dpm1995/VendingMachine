@@ -1,11 +1,13 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class PurchaseMenu {
     private int singleItemInfoSpot;
     public double currentWallet;
+    private NumberFormat dollarValue = NumberFormat.getCurrencyInstance();
 
     private int currentStock = 5;
 
@@ -22,7 +24,7 @@ public class PurchaseMenu {
             System.out.println("2) Select Product");
             System.out.println("3) Finish Transaction");
             System.out.println();
-            System.out.println("Current Money Provided: \\$" + this.currentWallet);
+            System.out.println("Current Money Provided: " + dollarValue.format(getCurrentWallet()));
 
             purchase = userInput.nextLine();
             switch (purchase) {
@@ -58,23 +60,25 @@ public class PurchaseMenu {
 
     public double insertMoney(){
         Scanner input = new Scanner(System.in);
+        String continueInput;
         AuditLog moneyTransaction = new AuditLog();
-        String moreMoney = "";
+        String moreMoney = "y";
         this.currentWallet = getCurrentWallet();
-        do {
+        while (moreMoney.equals("y")) {
             System.out.println("How much are you putting in? ");
             double deposit = input.nextDouble();
             if (deposit != Math.floor(deposit)){
                 System.out.println("Invalid money inserted, please try again. ");
                 continue;
             }
-            String startWallet = String.valueOf(deposit) + "0";
             currentWallet += deposit;
-            String newWallet = String.valueOf(currentWallet) + "0";
+            String startWallet = dollarValue.format(currentWallet);
+            String newWallet = dollarValue.format(currentWallet);
             moneyTransaction.logEvent("FEED Money", startWallet, newWallet);
             System.out.println("Would you like to insert more? ");
             moreMoney = input.nextLine();
-        } while (moreMoney.equals("y"));
+            System.out.println();
+        }
         return currentWallet;
     }
 }
