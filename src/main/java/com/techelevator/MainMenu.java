@@ -6,8 +6,14 @@ import java.util.Scanner;
 public class MainMenu {
     private Scanner userInput = new Scanner(System.in);
     private InventoryReader choice1 = new InventoryReader();
+    private PurchaseMenu sale = new PurchaseMenu();
 
     public MainMenu() {
+
+    }
+
+    public void openMenu(){
+
         FileReader initialInventory = new FileReader(); //Call fileReader now so you can give initial
         System.out.println("Welcome to the Vendo-Matic 800, pick from one of the following options. ");
 
@@ -22,17 +28,14 @@ public class MainMenu {
         do {
             switch (mainChoice) {
                 case "1":
-                    choice1.currentInventory();
+                    System.out.println(choice1.getInventoryList());
                     break;
                 case "2":
-                    PurchaseMenu sale = new PurchaseMenu(); //Need a new variable (type maybe?)
+                    sale.subMenu(mainChoice);
                     break;
                 case "3":
                     System.out.println("Thanks for shopping with Vendo-Matic, have a good day! ");
                     System.exit(0);
-                case "4":
-                    SalesReport report = new SalesReport(); //Placeholder for sales report class if I get to it.
-                    break;
                 default:
                     System.out.println("That is not a valid answer, so we'll ask again.");
             }

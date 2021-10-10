@@ -10,6 +10,7 @@ public class InventoryReader {
     private List<String> inventoryList;
     private String[] itemInfo = new String[5];
     private String code;
+    private int stock = 5;
 
     public InventoryReader(){
         final FileReader inventory = this.inventory;
@@ -48,9 +49,9 @@ public class InventoryReader {
     }
 
     public Map<String, Integer> inventoryCountParsing(){ //Figure out how to call a code that
-        List<String> itemDetails = this.inventoryList;   //Returns the info from here. Use that
-        for (int i = 0; i < itemDetails.size(); i++) {        //For log writing. Have said method(s)
-            itemInfo = itemDetails.get(i).split("\\|"); //Take maps for each criteria.
+                                                         //Returns the info from here. Use that
+        for (String itemDetails: inventoryList) {  //For log writing. Have said method(s)
+            itemDetails += "|" + stock; //Take maps for each criteria.
             int itemCount = Integer.parseInt(itemInfo[3]);
             codeToStock.put(itemInfo[0], itemCount);
         }
@@ -94,16 +95,8 @@ public class InventoryReader {
         return codeToName;
     }
 
-    public void setCodeToName(Map<String, String> codeToName) {
-        this.codeToName = codeToName;
-    }
-
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public FileReader getInventory() {
