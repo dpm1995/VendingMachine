@@ -1,15 +1,19 @@
 package com.techelevator;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 public class InventoryReader {
     private final FileReader inventory = new FileReader();
+    private NumberFormat dollarValue = NumberFormat.getCurrencyInstance();
     public Map<String, Double> codeToPrice = new HashMap<>();
     public Map<String, Integer> codeToStock = new HashMap<>();
     public Map<String, String> codeToName = new HashMap<>();
     public Map<String, String> codeToGroup = new HashMap<>();
     public List<String> inventoryList;
     private String[] itemInfo = new String[5];
+    private final String[] itemCodes = new String[] {"A1", "A2", "A3", "A4",
+            "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"};
     private String code;
     private int stock = 5;
 
@@ -19,43 +23,46 @@ public class InventoryReader {
     }
 
     public Map<String, String> currentInventory () {
-        getInventoryList();
+        List runningList = getInventoryList();  //Puts the current instance of the inventory.
+        String emptyItem = "";
         Map<String, String> currentInventory = new HashMap<>();
-        String itemCode = getCode();
         Map itemName = inventoryNameParsing();
         Map itemPrice = inventoryPriceParsing();
-        Map itemStock = inventoryCountParsing();
+        Map <String, Integer> itemStock = inventoryCountParsing();
         Map itemGroup = inventoryGroupParsing();
-        currentInventory.put(itemCode, "|" + itemName.get(code) + "|" + itemPrice.get(code)
-                    + "|" + itemGroup.get(code) + "|" + itemStock.get(code));
-        if (itemStock.get(code).equals(0)) {
-            currentInventory.put(itemCode, "is currently out of stock.");
+        for (int i = 0; i < runningList.size(); i++) {
+            String dollarFormat = dollarValue.format(itemPrice.get(itemCodes[i]));
+            currentInventory.put(itemCodes[i], "|" + itemName.get(itemCodes[i]) + "|" + dollarFormat
+                    + "|" + itemGroup.get(itemCodes[i]) + "|" + itemStock.get(itemCodes[i]));
+            if (itemStock.containsValue(0)) {
+                for (Map.Entry<String, Integer> emptyStock : itemStock.entrySet()){
+                    emptyItem = emptyStock.getKey();
+                }
+                currentInventory.put(emptyItem, "is currently out of stock.");
+            }
         }
         return currentInventory;
     }
 
     public Map<String, Integer> inventoryCountParsing(){
-        List<String> itemDetails = getInventoryList();
+        Map<String, Integer> stocks = this.codeToStock;
         for (int i = 0; i < inventoryList.size(); i++) {
-            itemInfo = inventoryList.get(i).split("\\|");
-            int itemCount = Integer.parseInt(itemInfo[4]);
-            this.codeToStock.put(itemInfo[0], itemCount);
+            stocks.put(this.itemCodes[i], 5);
+            this.codeToStock.put(itemCodes[i], 5);
         }
-        return codeToStock;
+        return stocks;
     }
 
     public Map<String, String> inventoryGroupParsing(){
-        List<String> itemDetails = getInventoryList();
         for (int i = 0; i < inventoryList.size(); i++) {
             itemInfo = inventoryList.get(i).split("\\|");
-            double itemGroup = Double.parseDouble(itemInfo[3]);
-            this.codeToPrice.put(itemInfo[0], itemGroup);
+            String itemGroup = itemInfo[3];
+            this.codeToGroup.put(itemInfo[0], itemGroup);
         }
         return codeToGroup;
     }
 
     public Map<String, Double> inventoryPriceParsing(){
-        List<String> itemDetails = getInventoryList();
         for (int i = 0; i < inventoryList.size(); i++) {
             itemInfo = inventoryList.get(i).split("\\|");
             double itemPrice = Double.parseDouble(itemInfo[2]);
@@ -65,7 +72,6 @@ public class InventoryReader {
     }
 
     public Map<String, String> inventoryNameParsing(){
-        List<String> itemDetails = getInventoryList();
         for (int i = 0; i < inventoryList.size(); i++) {
             itemInfo = inventoryList.get(i).split("\\|");
             this.codeToName.put(itemInfo[0], itemInfo[1]);
@@ -73,35 +79,9 @@ public class InventoryReader {
         return codeToName;
     }
 
-    public double itemPrice(String code){
-        double price = this.codeToPrice.get(code);
-        return price;
-    }
-
     public void updateStock(String code){
         this.codeToStock.put(code, codeToStock.get(code) - 1);
     }
-
-    public int viewStock(String code){
-        int count = this.codeToStock.get(code);
-        return count;
-    }
-
-    public Map<String, String> getCodeToName() {
-        return codeToName;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public FileReader getInventory() {
-        return inventory;
-    }
-
-    public Map<String, Double> getCodeToPrice() {
-        return codeToPrice;
-    } //HAVE AUDIT LOG CALL THIS
 
     public Map<String, Integer> getCodeToStock() {
         return codeToStock;

@@ -1,23 +1,22 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+
 public class Change {
     private AuditLog changeReturn = new AuditLog();
+    private NumberFormat dollar = NumberFormat.getCurrencyInstance();
     private final String action = "GIVE CHANGE";
-    private final double nickel = .05;
-    private final double dime = .1;
-    private final double quarter = .25;
+    private final Double nickel = .05;
+    private final Double dime = .1;
+    private final Double quarter = .25;
 
     public Change() {}
 
-    public double dispenseChange(double wallet){
-        String changeDue;
-        if (wallet % .1 != 0) {
-            changeDue = String.valueOf(wallet) + "0";
-            System.out.println("You have $" + wallet + "0 left in change.");
-        } else {
-            changeDue = String.valueOf(wallet);
-            System.out.println("You have $" + wallet + " left in change.");
-        }
+    public double dispenseChange(Double wallet){
+        BigDecimal finalWallet = new BigDecimal("0.00");
+        String changeDue = "GIVE CHANGE";
+        System.out.println("You have " + dollar.format(wallet) + " left in change.");
         int nickelCount = 0;
         int dimeCount = 0;
         int quarterCount = 0;
@@ -25,14 +24,17 @@ public class Change {
             if (wallet > quarter) {
                 wallet -= quarter;
                 quarterCount++;
+                Math.round(wallet);
                 continue;
             } else if (wallet > dime) {
                 wallet -= dime;
                 dimeCount++;
+                Math.round(wallet);
                 continue;
             } else if (wallet > nickel) {
                 wallet -= nickel;
                 nickelCount++;
+                Math.round(wallet);
                 continue;
             } else {
                 wallet = 0.0;

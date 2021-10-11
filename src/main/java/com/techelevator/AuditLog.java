@@ -36,7 +36,4 @@ public class AuditLog {
         }
         return logString;
     }
-    public boolean validSale(double wallet, double salePrice, int stock){ //Verifies sale.
-        return wallet > salePrice && stock > 0;
-    }
 }
